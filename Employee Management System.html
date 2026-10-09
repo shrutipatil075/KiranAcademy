@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)file:///C:/Users/Sneha%20Patil/Desktop/employee.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f0f4ff;
+            padding: 25px;
+            color: #202b50;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #405bb0, #6546a8);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px #cbd5f0;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #e5eaff;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px #dce4f5;
+        }
+
+        .card h2 {
+            background: #eef3ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            color: #273c85;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccd6ed;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            background: white;
+        }
+
+        input:focus, select:focus {
+            border-color: #3978f6;
+            box-shadow: 0 0 5px #b6caff;
+        }
+
+        .buttons {
+            margin-top: 25px;
+            display: flex;
+            gap: 12px;
+        }
+
+        button {
+            padding: 13px 22px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .add-btn {
+            background: #3478f6;
+            color: white;
+        }
+
+        .add-btn:hover {
+            background: #2458c4;
+            transform: translateY(-2px);
+        }
+
+        .reset-btn {
+            background: #edf1fa;
+            color: #394867;
+        }
+
+        .reset-btn:hover {
+            background: #dce4f5;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            min-width: 550px;
+        }
+
+        th {
+            background: #e9edff;
+            color: #293b7c;
+            padding: 16px;
+            text-align: left;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e7f5;
+        }
+
+        tbody tr:hover {
+            background: #f7f9ff;
+        }
+
+        .role {
+            display: inline-block;
+            background: #e3edff;
+            color: #245fc7;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .delete-btn {
+            background: #f05265;
+            color: white;
+            padding: 8px 12px;
+        }
+
+        .delete-btn:hover {
+            background: #d52e43;
+        }
+
+        #message {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+
+            .header h1 {
+                font-size: 25px;
+            }
+
+            .card {
+                padding: 16px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>👥 Employee Management</h1>
+        <p>Add and manage your employees easily</p>
+    </div>
+
+    <div class="card">
+        <h2>👤 Employee Form</h2>
+
+        <form id="employeeForm">
+            <div class="form-grid">
+
+                <div>
+                    <label for="empId">Employee ID</label>
+                    <input type="number" id="empId" placeholder="Enter employee ID" min="1" required="">
+                </div>
+
+                <div>
+                    <label for="empName">Name</label>
+                    <input type="text" id="empName" placeholder="Enter employee name" required="">
+                </div>
+
+                <div>
+                    <label for="empRole">Role</label>
+                    <select id="empRole" required="">
+                        <option value="">Select role</option>
+                        <option>Developer</option>
+                        <option>Tester</option>
+                        <option>Manager</option>
+                        <option>Designer</option>
+                        <option>HR</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="empSalary">Salary (₹)</label>
+                    <input type="number" id="empSalary" placeholder="Enter salary" min="0" required="">
+                </div>
+
+            </div>
+
+            <div class="buttons">
+                <button type="submit" class="add-btn">
+                    + Add Employee
+                </button>
+
+                <button type="reset" class="reset-btn">
+                    ↻ Reset
+                </button>
+            </div>
+
+            <p id="message"></p>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>▦ Employee Details</h2>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Salary</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="employeeTable">
+                    <!-- Employee data appears here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById("employeeForm");
+        const table = document.getElementById("employeeTable");
+        const message = document.getElementById("message");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const id = document.getElementById("empId").value.trim();
+            const name = document.getElementById("empName").value.trim();
+            const role = document.getElementById("empRole").value;
+            const salary = document.getElementById("empSalary").value;
+
+            if (Number(id) <= 0 || Number(salary) < 0) {
+                message.style.color = "red";
+                message.textContent = "Please enter valid details.";
+                return;
+            }
+
+            // Prevent duplicate employee IDs
+            const rows = table.querySelectorAll("tr");
+
+            for (const row of rows) {
+                if (row.cells[0].textContent === id) {
+                    message.style.color = "red";
+                    message.textContent = "Employee ID already exists!";
+                    return;
+                }
+            }
+
+            // Create a new table row
+            const row = document.createElement("tr");
+
+            [id, name, role, "₹ " + Number(salary).toLocaleString("en-IN")]
+                .forEach(function(value, index) {
+                    const cell = document.createElement("td");
+
+                    if (index === 2) {
+                        const badge = document.createElement("span");
+                        badge.className = "role";
+                        badge.textContent = value;
+                        cell.appendChild(badge);
+                    } else {
+                        cell.textContent = value;
+                    }
+
+                    row.appendChild(cell);
+                });
+
+            // Create Delete button
+            const actionCell = document.createElement("td");
+            const deleteBtn = document.createElement("button");
+
+            deleteBtn.textContent = "Delete";
+            deleteBtn.className = "delete-btn";
+
+            deleteBtn.addEventListener("click", function() {
+                row.remove();
+            });
+
+            actionCell.appendChild(deleteBtn);
+            row.appendChild(actionCell);
+
+            table.appendChild(row);
+
+            message.style.color = "green";
+            message.textContent = "Employee added successfully!";
+
+            form.reset();
+        });
+
+        form.addEventListener("reset", function() {
+            message.textContent = "";
+        });
+    </script>
+
+
+c</body></html>
